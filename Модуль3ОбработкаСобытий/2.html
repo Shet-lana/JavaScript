@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Модальное окно</title>
+    <!-- Подключение библиотеки jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Подключение внешнего скрипта -->
+    <script src="2.js"></script>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+<div class="modal">
+    <p>Это модальное окно!</p>
+    <button onclick="closeModal()">Закрыть</button>
+</div>
+<button onclick="openModal()">Открыть</button>
+</body>
+</html>
