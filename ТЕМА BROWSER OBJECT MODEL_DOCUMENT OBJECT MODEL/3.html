@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Accordion Example</title>
+    <style>
+        .accordion {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        
+        .accordion button {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+        }
+        
+        .accordion button.active,
+        .accordion button:hover {
+            background-color: #ccc;
+        }
+        
+        .panel {
+            padding: 0 18px;
+            display: none;
+            background-color: white;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<div class="accordion">
+    <button onclick="togglePanel(this)">What is Lorem Ipsum?</button>
+    <div class="panel">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+    </div>
+    
+    <button onclick="togglePanel(this)">Why do we use it?</button>
+    <div class="panel">
+        <p>The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters...</p>
+    </div>
+    
+    <button onclick="togglePanel(this)">Where does it come from?</button>
+    <div class="panel">
+        <p>It comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum"...</p>
+    </div>
+    
+    <button onclick="togglePanel(this)">Where can I get some?</button>
+    <div class="panel">
+        <p>There are many variations of passages of Lorem Ipsum available...</p>
+    </div>
+</div>
+
+<script>
+    function togglePanel(button) {
+        var panels = document.querySelectorAll('.panel');
+        panels.forEach(panel => panel.style.display = 'none'); // Закрыть все панели
+        var activeButton = document.querySelector('button.active');
+        if (activeButton) activeButton.classList.remove('active'); // Убрать активный класс у предыдущего активного элемента
+        button.classList.add('active'); // Добавить активный класс новому элементу
+        button.nextElementSibling.style.display = 'block'; // Показать панель
+    }
+</script>
+
+</body>
+</html>

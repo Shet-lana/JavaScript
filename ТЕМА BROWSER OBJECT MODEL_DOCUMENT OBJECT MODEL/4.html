@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Новости</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .news-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Новости</h1>
+    <div id="news-list"></div>
+    <button onclick="loadMoreNews()">Загрузить ещё новости</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Массив новостей
+        const news = [
+            { title: 'Новость 1', description: 'Описание первой новости.' },
+            { title: 'Новость 2', description: 'Описание второй новости.' },
+            { title: 'Новость 3', description: 'Описание третьей новости.' },
+            { title: 'Новость 4', description: 'Описание четвертой новости.' },
+            { title: 'Новость 5', description: 'Описание пятой новости.' },
+            { title: 'Новость 6', description: 'Описание шестой новости.' },
+            { title: 'Новость 7', description: 'Описание седьмой новости.' },
+            { title: 'Новость 8', description: 'Описание восьмой новости.' },
+            { title: 'Новость 9', description: 'Описание девятой новости.' },
+            { title: 'Новость 10', description: 'Описание десятой новости.' },
+        ];
+        
+        let currentIndex = 0;
+        const itemsPerLoad = 3;
+
+        function loadMoreNews() {
+            if (currentIndex >= news.length) return;
+            
+            const nextItems = news.slice(currentIndex, currentIndex + itemsPerLoad);
+            nextItems.forEach(item => {
+                $('#news-list').append(`
+                    <div class="news-item">
+                        <h2>${item.title}</h2>
+                        <p>${item.description}</p>
+                    </div>
+                `);
+            });
+            currentIndex += itemsPerLoad;
+        }
+
+        $(document).ready(function () {
+            loadMoreNews(); // Загрузка первых новостей
+        });
+    </script>
+</body>
+</html>

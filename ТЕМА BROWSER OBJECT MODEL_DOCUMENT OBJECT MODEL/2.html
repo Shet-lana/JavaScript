@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Галерея изображений</title>
+    <style>
+        .gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        img {
+            max-width: 50%;
+            max-height: 50%;
+        }
+        button {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<body>
+<div class="gallery">
+    <button id="prevBtn">Назад</button>
+    <img id="currentImage" src="" alt="Current Image"/>
+    <button id="nextBtn">Вперед</button>
+</div>
+
+<script>
+    // Массив изображений
+    const images = ["1.jpg", "2.jpg", "3.jpg"];
+    let currentIndex = 0;
+
+    function showImage() {
+        $('#currentImage').attr('src', images[currentIndex]);
+        
+        if(currentIndex === 0){
+            $("#prevBtn").prop("disabled", true);
+        } else {
+            $("#prevBtn").prop("disabled", false);
+        }
+    
+        if(currentIndex === images.length - 1){
+            $("#nextBtn").prop("disabled", true);
+        } else {
+            $("#nextBtn").prop("disabled", false);
+        }
+    }
+
+    $(document).ready(function(){
+        showImage();
+
+        $("#prevBtn").click(function () {
+            if(currentIndex > 0){
+                currentIndex--;
+                showImage();
+            }
+        });
+
+        $("#nextBtn").click(function () {
+            if(currentIndex < images.length - 1){
+                currentIndex++;
+                showImage();
+            }
+        });
+    });
+</script>
+</body>
+</html>
+

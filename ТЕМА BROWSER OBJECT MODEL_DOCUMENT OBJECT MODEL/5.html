@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendar Generator</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: auto;
+        }
+        
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        input[type=number], button {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Календарь на выбранный месяц</h1>
+    
+    <label for="month">Номер месяца:</label><br>
+    <input type="number" id="month" min="1" max="12"><br>
+    
+    <label for="year">Год:</label><br>
+    <input type="number" id="year"><br>
+    
+    <button onclick="generateCalendar()">Генерация календаря</button>
+    
+    <div id="calendar"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

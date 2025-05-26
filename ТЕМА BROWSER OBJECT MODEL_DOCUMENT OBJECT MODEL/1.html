@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trackbar Example</title>
+    <style>
+        .trackbar {
+            width: 300px;
+            height: 10px;
+            background-color: #ccc;
+            position: relative;
+        }
+        
+        .pointer {
+            width: 20px;
+            height: 20px;
+            background-color: blue;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="trackbar">
+        <div class="pointer"></div>
+    </div>
+    
+    <script>
+        const trackbar = document.querySelector('.trackbar');
+        const pointer = document.querySelector('.pointer');
+        
+        let startX = null;
+        let offsetX = null;
+        
+        function handleMouseDown(e) {
+            startX = e.clientX;
+            offsetX = pointer.offsetLeft;
+            
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+        }
+        
+        function handleMouseMove(e) {
+            const newOffsetX = offsetX + (e.clientX - startX);
+            if (newOffsetX >= 0 && newOffsetX <= trackbar.offsetWidth - pointer.offsetWidth) {
+                pointer.style.left = `${newOffsetX}px`;
+            }
+        }
+        
+        function handleMouseUp() {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
+        }
+        
+        pointer.addEventListener('mousedown', handleMouseDown);
+    </script>
+</body>
+</html>
