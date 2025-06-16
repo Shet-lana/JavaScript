@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Магазин Книг</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .book-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: calc(20% - 20px);
+            min-width: 200px;
+            text-align: center;
+        }
+        .book-card img {
+            width: 100%;
+            height: auto;
+        }
+        .book-card h3 {
+            margin: 10px 0;
+        }
+        .book-card button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .cart {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .cart h2 {
+            margin-bottom: 10px;
+        }
+        .cart ul {
+            list-style: none;
+            padding: 0;
+        }
+        .cart li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .cart input[type="number"] {
+            width: 50px;
+            text-align: center;
+        }
+        .cart button.delete {
+            background-color: transparent;
+            color: red;
+            border: none;
+            cursor: pointer;
+        }
+        .order-form {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .order-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .order-form input[type="text"], .order-form select, .order-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .order-form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Магазин Книг</h1>
+
+<div class="container">
+    <!-- Первая книга -->
+    <div class="book-card">
+        <img src="1.jpg" alt="Саша Питер">
+        <h3>Как выиграть на бирже</h3>
+        <select id="qty-1">
+            <option value="1">1 экземпляр</option>
+            <option value="2">2 экземпляра</option>
+            <option value="3">3 экземпляра</option>
+            <option value="4">4 экземпляра</option>
+            <option value="5">5 экземпляров</option>
+        </select>
+        <button onclick="addToCart('Как выиграть на бирже', document.getElementById('qty-1').value)">Купить</button>
+    </div>
+     <!-- вторая книга -->
+    <div class="book-card">
+        <img src="2.jpg" alt="Иван Стрижак">
+        <h3>Как строить планы</h3>
+        <select id="qty-1">
+            <option value="1">1 экземпляр</option>
+            <option value="2">2 экземпляра</option>
+            <option value="3">3 экземпляра</option>
+            <option value="4">4 экземпляра</option>
+            <option value="5">5 экземпляров</option>
+        </select>
+        <button onclick="addToCart('Как строить планы', document.getElementById('qty-1').value)">Купить</button>
+    </div>
+    <!-- третья книга -->
+    <div class="book-card">
+        <img src="3.jpg" alt="Иван Рэмович">
+        <h3>САМОРАЗВИТИЕ</h3>
+        <select id="qty-1">
+            <option value="1">1 экземпляр</option>
+            <option value="2">2 экземпляра</option>
+            <option value="3">3 экземпляра</option>
+            <option value="4">4 экземпляра</option>
+            <option value="5">5 экземпляров</option>
+        </select>
+        <button onclick="addToCart('САМОРАЗВИТИЕ', document.getElementById('qty-1').value)">Купить</button>
+    </div>
+    <!-- четвертая книга -->
+    <div class="book-card">
+        <img src="4.jpg" alt="Роман Владимирович Савенков">
+        <h3>Путь менеджера</h3>
+        <select id="qty-1">
+            <option value="1">1 экземпляр</option>
+            <option value="2">2 экземпляра</option>
+            <option value="3">3 экземпляра</option>
+            <option value="4">4 экземпляра</option>
+            <option value="5">5 экземпляров</option>
+        </select>
+        <button onclick="addToCart('Путь менеджера', document.getElementById('qty-1').value)">Купить</button>
+    </div>
+    <!-- пятая книга -->
+    <div class="book-card">
+        <img src="5.jpg" alt="Денис Патрушев">
+        <h3>Социальная сеть, которая изменит мир</h3>
+        <select id="qty-1">
+            <option value="1">1 экземпляр</option>
+            <option value="2">2 экземпляра</option>
+            <option value="3">3 экземпляра</option>
+            <option value="4">4 экземпляра</option>
+            <option value="5">5 экземпляров</option>
+        </select>
+        <button onclick="addToCart('Социальная сеть, которая изменит мир', document.getElementById('qty-1').value)">Купить</button>
+    </div>
+    <!-- шестая книга -->
+    <div class="book-card">
+        <img src="6.jpg" alt="Іван Маскалюк">
+        <h3>СЕМЬ НАВЫКОВ ПРЕУСПЕВАЮЩИХ ЛЮДЕЙ</h3>
+        <select id="qty-1">
+            <option value="1">1 экземпляр</option>
+            <option value="2">2 экземпляра</option>
+            <option value="3">3 экземпляра</option>
+            <option value="4">4 экземпляра</option>
+            <option value="5">5 экземпляров</option>
+        </select>
+        <button onclick="addToCart('СЕМЬ НАВЫКОВ ПРЕУСПЕВАЮЩИХ ЛЮДЕЙ', document.getElementById('qty-1').value)">Купить</button>
+    </div>
+    <!-- седьмая книга -->
+    <div class="book-card">
+        <img src="7.jpg" alt="kostrikin">
+        <h3>Справочник по КИК</h3>
+        <select id="qty-1">
+            <option value="1">1 экземпляр</option>
+            <option value="2">2 экземпляра</option>
+            <option value="3">3 экземпляра</option>
+            <option value="4">4 экземпляра</option>
+            <option value="5">5 экземпляров</option>
+        </select>
+        <button onclick="addToCart('Справочник по КИК', document.getElementById('qty-1').value)">Купить</button>
+    </div>
+</div>
+
+<div class="cart">
+    <h2>Корзина</h2>
+    <ul id="cart-items"></ul>
+</div>
+
+<div class="order-form">
+    <h2>Оформление заказа</h2>
+    <label for="name">Ваше имя:</label>
+    <input type="text" id="name" required placeholder="ФИО">
+
+    <label for="delivery-date">Дата доставки:</label>
+    <input type="date" id="delivery-date" required>
+
+    <label for="address">Адрес доставки:</label>
+    <textarea id="address" required placeholder="адрес"></textarea>
+
+    <label for="comment">Комментарий:</label>
+    <textarea id="comment" placeholder="Любые дополнительные комментарии"></textarea>
+
+    <button onclick="processOrder()">Отправить заказ</button>
+</div>
+
+<script>
+    // Хранит корзину покупок
+    let cart = {};
+
+    // Добавляет книгу в корзину
+    function addToCart(bookTitle, qty) {
+        if (cart.hasOwnProperty(bookTitle)) {
+            cart[bookTitle] += Number(qty);
+        } else {
+            cart[bookTitle] = Number(qty);
+        }
+        refreshCartUI();
+    }
+
+    // Обновляет представление корзины
+    function refreshCartUI() {
+        const cartList = document.getElementById('cart-items');
+        cartList.innerHTML = ''; // Очистка текущего списка
+
+        for (let book in cart) {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                ${book} (${cart[book]} экз.)
+                <button class="delete" onclick="removeFromCart('${book}')">Удалить</button>
+            `;
+            cartList.appendChild(li);
+        }
+    }
+
+    // Удаляет книгу из корзины
+    function removeFromCart(bookTitle) {
+        delete cart[bookTitle];
+        refreshCartUI(); // обновление UI
+    }
+
+    // Обрабатывает оформление заказа
+    function processOrder() {
+        const name = document.getElementById('name').value;
+        const deliveryDate = document.getElementById('delivery-date').value;
+        const address = document.getElementById('address').value;
+        const comment = document.getElementById('comment').value;
+
+        let orderSummary = "";
+        for (let book in cart) {
+            orderSummary += `${book} (${cart[book]} экз.), `;
+        }
+
+        // Окончательное подтверждение заказа
+        alert(`
+            Спасибо за покупку, ${name}!
+            
+            Ваша покупка:
+            ${orderSummary}
+            
+            Дата доставки: ${deliveryDate}
+            Адрес доставки: ${address}
+            
+            Комментарий: ${comment ? comment : '-'}`);
+    }
+</script>
+
+</body>
+</html>

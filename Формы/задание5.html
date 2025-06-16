@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Журнал посещения</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-group">
+            <label for="group">Group:</label>
+            <select id="group" name="group">
+                <option value="Group 1">Group 1</option>
+                <option value="Group 2">Group 2</option>
+                <option value="Group 3">Group 3</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="lesson">Lesson:</label>
+            <input type="text" id="lesson" name="lesson" value="номер урока">
+        </div>
+        <div class="form-group">
+            <label for="topic">Topic:</label>
+            <input type="text" id="topic" name="topic" value="тема урока">
+        </div>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Is present</th>
+            </tr>
+            <tr>
+                <td>Student 1</td>
+                <td><input type="checkbox" checked></td>
+            </tr>
+            <tr>
+                <td>Student 2</td>
+                <td><input type="checkbox" checked></td>
+            </tr>
+            <tr>
+                <td>Student 3</td>
+                <td><input type="checkbox"></td>
+            </tr>
+        </table>
+        <button type="button" onclick="saveAttendance()">Save</button>
+    </div>
+
+
+    <div class="container">
+        <h2>Отмеченные пары</h2>
+        <table id="attendanceTable">
+            <tr>
+                <th>Group</th>
+                <th>Lesson</th>
+                <th>Topic</th>
+                <th>Students Present</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        let attendanceData = [];
+
+        function saveAttendance() {
+            const group = document.getElementById('group').value;
+            const lesson = document.getElementById('lesson').value;
+            const topic = document.getElementById('topic').value;
+            const students = ['Student 1', 'Student 2', 'Student 3'];
+            const presentStudents = [];
+
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach((checkbox, index) => {
+                if (checkbox.checked) {
+                    presentStudents.push(students[index]);
+                }
+            });
+
+            attendanceData.push({
+                group,
+                lesson,
+                topic,
+                presentStudents
+            });
+
+            updateAttendanceTable();
+            updateSecondForm();
+        }
+
+        function updateAttendanceTable() {
+            const attendanceTable = document.getElementById('attendanceTable');
+            attendanceTable.innerHTML = '';
+
+            attendanceData.forEach((data, index) => {
+                const row = attendanceTable.insertRow();
+                row.insertCell().textContent = data.group;
+                row.insertCell().textContent = data.lesson;
+                row.insertCell().textContent = data.topic;
+                row.insertCell().textContent = data.presentStudents.join(', ');
+            });
+        }
+
+        function updateSecondForm() {
+            const lastAttendance = attendanceData[attendanceData.length - 1];
+            if (lastAttendance) {
+                document.getElementById('group2').value = lastAttendance.group;
+                document.getElementById('lesson2').value = lastAttendance.lesson;
+                document.getElementById('topic2').value = lastAttendance.topic;
+
+                const students = ['Student 1', 'Student 2', 'Student 3'];
+                students.forEach((student, index) => {
+                    const checkbox = document.getElementById(`student${index + 1}`);
+                    checkbox.checked = lastAttendance.presentStudents.includes(student);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

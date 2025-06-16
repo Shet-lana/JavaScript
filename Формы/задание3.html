@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Styling Form</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            max-width: 600px;
+            background-color: #ffd7a0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        input[type=radio], input[type=checkbox] {
+            margin-right: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease-in-out;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output-text {
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 1.5;
+            background-color: #ffd7a0;
+            padding: 10px;
+            border-radius: 8px;
+            width: 600px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .underline {
+            text-decoration: underline;
+        }
+        .italic {
+            font-style: italic;
+        }
+        .left {
+            text-align: center;
+        }
+        .right {
+            text-align: right;
+        }
+        .justify {
+            text-align: justify;
+        }
+        h2, h3 {
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Text Styling Form</h2>
+    <label for="inputText">Enter text:</label><br>
+    <textarea id="inputText" rows="4" cols="50"></textarea><br>
+    
+    <!-- Выбор стилей -->
+    <div style="margin-top: 10px;">
+        <span>Choose styles:</span><br>
+        <label><input type="checkbox" name="styles" value="bold"> Bold</label>
+        <label><input type="checkbox" name="styles" value="underline"> Underline</label>
+        <label><input type="checkbox" name="styles" value="italic"> Italic</label>
+        <label><input type="radio" name="alignment" value="left" checked> Center</label>
+        <label><input type="radio" name="alignment" value="right"> Right</label>
+        <label><input type="radio" name="alignment" value="justify"> Justify</label>
+    </div>
+    
+    <!-- Кнопка отображения результата -->
+    <button onclick="showStyledText()">Show Text</button>
+</div>
+
+<!-- Контейнер вывода отформатированного текста -->
+<div class="output-text" id="outputText">
+    <h3>Result</h3>
+</div>
+
+<script>
+// Функция обработки кнопки 'Show Text'
+function showStyledText() {
+    const input = document.getElementById('inputText').value.trim();
+    if (!input) return alert("Enter text!");
+
+    // Получаем выбранные стили
+    let styles = [];
+    const checkboxes = document.querySelectorAll('input[name="styles"]');
+    checkboxes.forEach(cb => {if (cb.checked) styles.push(cb.value);});
+
+    // Определяем выравнивание
+    const alignmentRadio = document.querySelectorAll('input[name="alignment"]');
+    let alignValue = '';
+    alignmentRadio.forEach(radio => {if (radio.checked) alignValue = radio.value;});
+
+    // Формирование CSS-классов на основе выбранных стилей
+    let classes = styles.join(' ');
+    switch (alignValue) {
+        case 'left':   classes += ' left'; break;
+        case 'right':  classes += ' right'; break;
+        case 'justify':classes += ' justify'; break;
+    }
+
+    // Обновляем HTML-код с примененными стилями
+    document.getElementById('outputText').innerHTML =
+        `<h3>Result</h3><p class="${classes}">${input}</p>`;
+}
+</script>
+
+</body>
+</html>

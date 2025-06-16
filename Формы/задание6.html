@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Ticket Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffe5b4;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        input[type="text"], select {
+            width: 30%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="date"] {
+            width: 30%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .calendar input[type="checkbox"] {
+            display: none;
+        }
+        .calendar label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .calendar label:hover {
+            background-color: #f0f0f0;
+        }
+        .calendar input[type="checkbox"]:checked + label {
+            background-color: #007bff;
+            color: white;
+        }
+        .total-price {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .booked-tickets {
+            margin-top: 20px;
+        }
+        .booked-tickets h2 {
+            margin-bottom: 10px;
+        }
+        .booked-tickets ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .booked-tickets li {
+            margin-bottom: 5px;
+        }
+        .ticket-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .ticket-table th, .ticket-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        .ticket-table th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Train Ticket Booking</h2>
+        <div class="form-group">
+            <label for="direction">Direction:</label>
+            <input type="text" id="direction" placeholder="Enter direction">
+            <input type="date" id="date">
+            <button onclick="searchTickets()">Search</button>
+        </div>
+        <div id="calendar" class="calendar">
+        </div>
+        <div class="total-price">
+            Total price: <span id="totalPrice">0$</span>
+        </div>
+        <button onclick="bookTickets()">Book</button>
+        <div class="booked-tickets">
+            <h2>My tickets:</h2>
+            <table class="ticket-table">
+                <thead>
+                    <tr>
+                        <th>Direction</th>
+                        <th>Date</th>
+                        <th>Seat</th>
+                    </tr>
+                </thead>
+                <tbody id="bookedTicketsList">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let bookedTickets = [];
+        let selectedDays = [];
+        let totalPrice = 0;
+
+        function searchTickets() {
+            const direction = document.getElementById('direction').value;
+            const date = document.getElementById('date').value;
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+
+            selectedDays = [];
+            totalPrice = 0;
+            document.getElementById('totalPrice').textContent = '0$';
+
+            const year = parseInt(date.split('-')[0]);
+            const month = parseInt(date.split('-')[1]) - 1;
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                const dayInput = document.createElement('input');
+                dayInput.type = 'checkbox';
+                dayInput.id = `day${i}`;
+                dayInput.value = i;
+
+                const dayLabel = document.createElement('label');
+                dayLabel.htmlFor = `day${i}`;
+                dayLabel.textContent = i;
+
+                calendar.appendChild(dayInput);
+                calendar.appendChild(dayLabel);
+            }
+        }
+
+        function bookTickets() {
+            const checkedDays = document.querySelectorAll('.calendar input[type="checkbox"]:checked');
+            selectedDays = Array.from(checkedDays).map(day => parseInt(day.value));
+            totalPrice = selectedDays.length * 10;
+
+            document.getElementById('totalPrice').textContent = `${totalPrice}$`;
+
+            const direction = document.getElementById('direction').value;
+            const date = document.getElementById('date').value;
+
+            const ticketInfo = {
+                direction,
+                date,
+                days: selectedDays,
+                totalPrice
+            };
+
+            bookedTickets.push(ticketInfo);
+            updateBookedTicketsList();
+        }
+
+        function updateBookedTicketsList() {
+            const bookedTicketsList = document.getElementById('bookedTicketsList');
+            bookedTicketsList.innerHTML = '';
+
+            bookedTickets.forEach((ticket, index) => {
+                const row = document.createElement('tr');
+
+                const directionCell = document.createElement('td');
+                directionCell.textContent = ticket.direction;
+                row.appendChild(directionCell);
+
+                const dateCell = document.createElement('td');
+                dateCell.textContent = ticket.date;
+                row.appendChild(dateCell);
+
+                const seatCell = document.createElement('td');
+                seatCell.textContent = ticket.days.join(', ');
+                row.appendChild(seatCell);
+
+                bookedTicketsList.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
